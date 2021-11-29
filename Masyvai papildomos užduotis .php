@@ -66,9 +66,26 @@ print_r($sum0);
 echo '<h2>Antra D užduotis</h2>';
 
 
+for($i = 0; $i < 10; $i++){
+    for($x = 0; $x < 2; $x++){
+        $masyvas_out[$i][] = rand(5,25);
+    }
+}
+echo '<pre>';
+print_r($masyvas_out);
+echo '<pre>';
 
-//e) Suskaičiuokite kiekvieno iš antro lygio masyvų elementų sumą atskirai ir sumas panaudokite kaip reikšmes sukuriant naują masyvą. T.y. pirma naujo masyvo reikšmė turi būti lygi mažesnio masyvo, turinčio indeksą 0 dideliame masyve, visų elementų sumai 
+//e) Suskaičiuokite kiekvieno iš antro lygio masyvų elementų 
+//sumą atskirai ir sumas panaudokite kaip reikšmes sukuriant 
+//naują masyvą. T.y. pirma naujo masyvo reikšmė turi būti lygi 
+//mažesnio masyvo, turinčio indeksą 0 dideliame masyve, visų elementų sumai 
 echo '<h2>Antra E užduotis</h2>';
+foreach($masyvas_out as $index1 => $skaicius_out){
+    $masyvas_out[10][$index1] = array_sum($skaicius_out);
+}
 
+echo '<pre>';
+print_r($masyvas_out);
+echo '<pre>';
 
 ?>
