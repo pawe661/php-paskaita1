@@ -88,4 +88,23 @@ echo '<pre>';
 print_r($masyvas_out);
 echo '<pre>';
 
+//Sukurkite masyvą iš 10 elementų. Kiekvienas masyvo elementas turi 
+//būti masyvas su atsitiktiniu kiekiu nuo 2 iki 20 elementų. Elementų reikšmės 
+//atsitiktinai parinktos raidės iš intervalo A-Z. Išrūšiuokite antro lygio 
+//masyvus pagal abėcėlę (t.y. tuos kur su raidėm).
+echo '<h2>Trečia užduotis</h2>';
+$az = range('A', 'Z');
+$top_az = [];
+
+$az_count = count($az);
+
+for($i = 0; $i < 10; $i++){
+    $y = rand(2,20);
+    for($x = 0; $x < $y; $x++){
+        $top_az[$i][] = $az[rand(0,$az_count - 1)];
+    }
+    asort($top_az[$i]);
+}
+
+print_r($top_az);
 ?>
