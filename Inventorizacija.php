@@ -15,93 +15,108 @@
 
 <div class="container bg-primary">
 <div class="row justify-content-center">
-                    <div class="col-md-12 mt-2 mb-2">
-                        <div class="card">
-                            <div class="card-header bg-dark text-light">Register</div>
-            <div class="m-2">
-            <?php
-            //PHP visu zinuciu atvaizdavimui naudokite:
-                ini_set('display_errors', true); 
-                error_reporting(E_ALL);
-                //tikrina ar value nustatyta ir ar yra array tada  atvaizduoja lentelę
-                if( isset($_GET['prekes']) AND is_array($_GET['prekes'])
-                            AND count($_GET['prekes']) > 0 ) :
+    <div class="col-md-12 mt-2 mb-2">
+        <div class="card">
+            <div class="card-header bg-dark text-light">Register</div>
+                <div class="m-2">
+                    <?php
+                    //PHP visu zinuciu atvaizdavimui naudokite:
+                        ini_set('display_errors', true); 
+                        error_reporting(E_ALL);
+                        //tikrina ar value nustatyta ir ar yra array tada  atvaizduoja lentelę
+                        if( isset($_GET['prekes']) AND is_array($_GET['prekes'])
+                                AND count($_GET['prekes']) > 0 ) :
 
-                        $prekes = $_GET['prekes'];
-            ?>
-                <table class="table text-start ">
-                    <thead>
-                        <th>Prekių Pavadinimas</th>
-                        <th>Prekių Kiekis</th>
-                        <th>Prekių Kaina</th>
-                    </thead>
-                    <tbody>
-                <?php
+                                $prekes = $_GET['prekes'];
+
+                    ?>
+                    <table class="table text-start ">
+                        <thead>
+                            <th>Prekių Pavadinimas</th>
+                            <th>Prekių Kiekis</th>
+                            <th>Prekių Kaina</th>
+                        </thead>
+                        <tbody>
+                    <?php
                         $kiekis = 0;
+                        $kiekis_bendras = 0;
+                        $kaina_visu = 0;
                         $suma = 0;
-                        $nuolaida = "";
+                        $percent = 0;
 
-                    //generuoja lentelę
+                        //generuoja lentelę
                         foreach($prekes as $preke) {
                             if(is_array($preke)){
                                 if($preke['prekes_pavadinimas'] != '') {
-                            ?>
-                                <tr>
-                                    <td> <?php echo $preke['prekes_pavadinimas']; ?></td>
-                                    <td> <?php echo $preke['kiekis']; ?></td>
-                                    <td> <?php echo $preke['kaina']; ?></td>
-                                </tr>
-                            <?php
+                                ?>
+                                    <tr>
+                                        <td> <?php echo $preke['prekes_pavadinimas']; ?></td>
+                                        <td> <?php echo $preke['kiekis']; ?></td>
+                                        <td> <?php echo $preke['kaina']; ?></td>
+                                    </tr>
+                                <?php
+                                    }
+                                    if(is_numeric($preke['kiekis'])){
+                                        $kiekis = $preke['kiekis'];
+                                        $kiekis_bendras += $preke['kiekis'];
+                                    }
+                                    if( is_numeric($preke['kaina']) ) {
+                                        $kaina_visu = $preke['kaina'];
+                                        
+                                //paskaičiuoja nuolaidą
+                                if(isset($prekes['prekes_nuolaida'])){ 
+                                    if($kaina_visu > 10){
+                                        if($prekes['prekes_nuolaida'] == "BLACKFIRDAY"){
+                                            $percent = 10;
+                                            echo "Su kuponu BLACKFIRDAY 10% nuolaida prekei " .  $preke['prekes_pavadinimas'] . "<br />";
+                                        }elseif($prekes['prekes_nuolaida'] == "ACHILAS"){
+                                            $percent = 20;
+                                            echo "Su kuponu ACHILAS 20% nuolaida prekei " .  $preke['prekes_pavadinimas'] . "<br />";
+                                        }elseif($prekes['prekes_nuolaida'] == "META"){
+                                            $percent = 30;
+                                            echo "Su kuponu META 30% nuolaida prekei " .  $preke['prekes_pavadinimas'] . "<br />";
+                                        }else{
+                                            echo "Nuolaidos kodas netaisingas <br />";
+                                        }
+                                        $kaina_visu = $kaina_visu - ($kaina_visu * $percent / 100);
+                                    }elseif($kaina_visu != 0){
+                                        echo "Nuolaida netaikoma <br />";
+                                    }
                                 }
-                                if(is_numeric($preke['kiekis'])){
-                                    $kiekis += $preke['kiekis'];
-                                }
-                                if( is_numeric($preke['kaina']) ) {
-                                    $suma += $preke['kaina'];
+                                    $suma += $kiekis * $kaina_visu;
+                                    
+
+                                    
+                                    }
                                 }
                             }
-                        }
-                    //paskaičiuoja nuolaidą  
-                        $nuolaida = isset($_GET['prekes']['prekes_nuolaida']) ? $_GET['prekes']['prekes_nuolaida'] : '';            
-                            if($suma > 10){
-                                if($nuolaida == "BLACKFIRDAY"){
-                                    echo "Su kuponu BLACKFIRDAY 10% nuolaida <br />";
-                                }elseif($nuolaida == "ACHILAS"){
-                                    echo "Su kuponu BLACKFIRDAY 10% nuolaida <br />";
-                                }elseif($nuolaida == "META"){
-                                    echo "Su kuponu BLACKFIRDAY 10% nuolaida <br />";
-                                }else{
-                                    echo "Nuolaidos kodas netaisingas <br />";
-                                }
-                            }else{
-                                echo "Nuolaida netaikoma <br />";
-                            }
-                        ?> 
-                        <div class=" h4" >
-                            <?php
-                            echo 'Bendras prekių kiekis yra: ' .'<strong>'. $kiekis .'</strong> vnt.<br />';
-                            echo 'Bendra prekių kaina yra: ' .'<strong>' . $suma . '</strong> eur.<br />';
+
                             ?> 
-                        </div>
-                        </tbody>
-                    </table>
-            </div>
+                            <div class=" h4" >
+                                <?php
+                                echo 'Bendras prekių kiekis yra: ' .'<strong>'. $kiekis_bendras .'</strong> vnt.<br />';
+                                echo 'Bendra prekių kaina yra: ' .'<strong>' . $suma . '</strong> eur.<br />';
+                                ?> 
+                            </div>
+                            </tbody>
+                        </table>
+                </div>
                     <?php endif ?>
                         <!-- form paduoda METHOD kokiu budu bus perduodami duomenis -->
-                         <form method="GET" action="">
-                            <div class="row g-3 p-2 justify-content-center">
-                                <!-- Dropdown list su rušiavimu -->
-                                <!-- <div class="col-sm-8 ">
-                                    <select name="rusiavimas" class="form-select">
-                                        <option value="0">Pasirinkite rušiavimo būdą:</option>
-                                        <option value="1">Rusiuoti pagal pavadinima</option>
-                                        <option value="2">Rusiuoti pagal kieki</option>
-                                    </select>
-                                </div> -->
+                    <form method="GET" action="">
+                        <div class="row g-3 p-2 justify-content-center">
+                            <!-- Dropdown list su rušiavimu -->
+                            <!-- <div class="col-sm-8 ">
+                                <select name="rusiavimas" class="form-select">
+                                    <option value="0">Pasirinkite rušiavimo būdą:</option>
+                                    <option value="1">Rusiuoti pagal pavadinima</option>
+                                    <option value="2">Rusiuoti pagal kieki</option>
+                                </select>
+                            </div> -->
 
                            <!--Nuolaidos kodai  -->
                            <?php
-                        //    $nuolaida = isset($_GET['prekes']['prekes_nuolaida']) ? $_GET['prekes']['prekes_nuolaida'] : '';
+                        $nuolaida = isset($_GET['prekes']['prekes_nuolaida']) ? $_GET['prekes']['prekes_nuolaida'] : '';
                                 
                            ?>
                            <div class="col-sm-8 ">
