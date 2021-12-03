@@ -107,4 +107,69 @@ for($i = 0; $i < 10; $i++){
 }
 
 print_r($top_az);
+
+//3.1 Išrūšiuokite trečio uždavinio pirmo lygio masyvą taip, kad elementai 
+//kurių masyvai trumpiausi eitų pradžioje. Masyvai kurie turi bent vieną “K” raidę, 
+//visada būtų didžiojo masyvo visai pradžioje.
+echo '<h2>Ketvirta užduotis</h2>';
+
+
+foreach($top_az as $index => $out_az){
+    if(array_search('K', $out_az) == true){
+        unset($top_az[$index]);
+        $temp_az[$index] = $out_az;
+    }
+}
+function sort_cb($a, $b) {
+    return count($a) - count($b);
+}
+uasort($top_az, 'sort_cb');
+
+if($temp_az != null){
+function sort_db($a, $b) {
+    return count($a) - count($b);
+}
+uasort($temp_az, 'sort_db');
+
+$top_az = $temp_az + $top_az ;
+}
+print_r($top_az);
+
+
+//Sukurkite masyvą iš 30 elementų. Kiekvienas masyvo elementas yra 
+//masyvas [user_id => xxx, place_in_row => xxx] user_id atsitiktinis 
+//unikalus skaičius nuo 1 iki 1000000, place_in_row atsitiktinis skaičius nuo 0 iki 100. 
+echo '<h2>Penkta užduotis</h2>';
+$registr = [];
+for($i = 0; $i < 30; $i++){
+        $u_id['user_id'] = rand(1,1000000);
+        $u_row['place_in_row'] = rand(0,100);
+        $registr[] = $u_id + $u_row;
+} 
+print_r($registr);
+
+// Prie 6 uždavinio masyvo antro lygio masyvų pridėkite dar du elementus: 
+// name ir surname. Elementus užpildykite stringais iš atsitiktinai sugeneruotų 
+// lotyniškų raidžių, kurių ilgiai nuo 5 iki 15.
+echo '<h2>Šešta užduotis</h2>';
+
+// $letter_low = chr(rand(97,122));
+$letter_n = '';
+$letter_s = '';
+foreach($registr as $index => $elements){
+    for($n = 0; $n < (rand(5,15)); $n++){
+            $letter_n .= chr(rand(97,122)); //lower letters
+    }
+    
+    for($s = 0; $s < (rand(5,15)); $s++){
+            $letter_s .= chr(rand(97,122)); //lower letters
+    }
+    $name['name'] = $letter_n;
+    $surname['surname'] = $letter_s;
+    $letter_n = 0;
+    $letter_s = 0;
+
+    $registr[$index] = $elements + $name + $surname;
+}
+print_r($registr);
 ?>
