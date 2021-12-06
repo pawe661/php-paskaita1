@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paprasta aplikacija</title>
+</head>
+<body> 
 <?php
 //Sugeneruokite masyvą iš 10 elementų, kurio elementai būtų masyvai 
 //iš 5 elementų su reikšmėmis nuo 5 iki 25.
@@ -172,4 +181,67 @@ foreach($registr as $index => $elements){
     $registr[$index] = $elements + $name + $surname;
 }
 print_r($registr);
+
+//Sukurkite masyvą iš 10 elementų. Jo reikšmės masyvai iš 10 elementų. 
+//Antro lygio masyvų reikšmės masyvai su dviem elementais value ir color.
+//Reikšmė value vienas iš atsitiktinai parinktų simbolių: #%+*@裡, 
+//o reikšmė color atsitiktinai sugeneruota spalva formatu: #XXXXXX. 
+//Pasinaudoję masyvų atspausdinkite “kvadratą” kurį sudarytų masyvo reikšmės 
+//nuspalvintos spalva color.
+echo '<h2>Septinta užduotis</h2>';
+$sym = '#%+*@裡';
+$output = [];
+$line_count = 0;
+//kaip 裡 desplay??? UTC-8 neparodo
+
+for($i = 0; $i < 10; $i++){
+    for($z = 0; $z < 10; $z++){
+        $two_array['value'] = $sym[rand(0, strlen($sym)-1)];
+        $twos_array['color'] = str_pad(dechex(rand(0x000000, 0xFFFFFF)), 6, 0, STR_PAD_LEFT);
+        $output[$i][$z] = $two_array + $twos_array;
+    }
+}
+for($sym_count = 0; $sym_count < 10 && $line_count < 10; $sym_count++){
+    for($x = 0; $x < 10; $x++){
+        echo '<span style="color:#' . $output[$sym_count][$x]['color'] . '">'. $output[$sym_count][$x]['value'] . ' ' . "</span>";
+    }
+    echo '<br />';
+    $line_count++;
+}
+// print_r($output);
+
+//Sukurkite masyvą iš 10 elementų. Masyvo reikšmes užpildykite pagal taisyklę:
+//generuokite skaičių nuo 0 iki 5. Ir sukurkite tokio ilgio masyvą. Jeigu 
+//reikšmė yra 0 masyvo nekurkite. Antro lygio masyvo reikšmes užpildykite 
+//atsitiktiniais skaičiais nuo 0 iki 10. Ten kur masyvo nekūrėte reikšmę 
+//nuo 0 iki 10 įrašykite tiesiogiai.
+echo '<h2>Aštunta užduotis</h2>';
+$z = null;
+for($i = 0; $i < 10; $i++){
+    $z = rand(0,5);
+    // echo $z . '<br />';
+    if($z == 0){
+        $out[$i] = rand(0,10);
+    }else{
+        for($y = 0; $y < $z; $y++){
+            $out[$i][$y] = rand(0,10);
+        }  
+    }
+}
+print_r($out);
+
+//Paskaičiuokite 8 uždavinio masyvo visų reikšmių sumą ir išrūšiuokite
+// masyvą taip, kad pirmiausiai eitų mažiausios masyvo reikšmės arba jeigu 
+//reikšmė yra masyvas, to masyvo reikšmių sumos.
+echo '<h2>Devinta užduotis</h2>';
+
+foreach ($out as $index => $skaicius) {
+    if(is_array($skaicius)){
+        $out[$index] = array_sum($skaicius); 
+    }
+}
+sort($out);
+print_r($out);
 ?>
+</body>
+</html>
