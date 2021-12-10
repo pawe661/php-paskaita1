@@ -76,19 +76,23 @@ if($loged_out){
                                                 if($kaina_visu > 10){
                                                     if($prekes['prekes_nuolaida'] == "BLACKFIRDAY"){
                                                         $percent = 10;
-                                                        echo "Su kuponu BLACKFIRDAY 10% nuolaida prekei " .  $preke['prekes_pavadinimas'] . "<br />";
+                                                        echo '<div class="alert alert-success" role="alert"> 
+                                                            Su kuponu BLACKFIRDAY 10% nuolaida prekei ' .  $preke['prekes_pavadinimas'] . "</div>";
                                                     }elseif($prekes['prekes_nuolaida'] == "ACHILAS"){
                                                         $percent = 20;
-                                                        echo "Su kuponu ACHILAS 20% nuolaida prekei " .  $preke['prekes_pavadinimas'] . "<br />";
+                                                        echo '<div class="alert alert-success" role="alert"> 
+                                                            Su kuponu ACHILAS 20% nuolaida prekei ' .  $preke['prekes_pavadinimas'] . "</div>";
                                                     }elseif($prekes['prekes_nuolaida'] == "META"){
                                                         $percent = 30;
-                                                        echo "Su kuponu META 30% nuolaida prekei " .  $preke['prekes_pavadinimas'] . "<br />";
+                                                        echo '<div class="alert alert-success" role="alert"> 
+                                                            Su kuponu META 30% nuolaida prekei ' .  $preke['prekes_pavadinimas'] . "</div>";
                                                     }else{
-                                                        echo "Nuolaidos kodas netaisingas <br />";
+                                                        echo '<div class="alert alert-danger" role="alert"> 
+                                                            Nuolaidos kodas netaisingas </div>';
                                                     }
                                                     $kaina_visu = $kaina_visu - ($kaina_visu * $percent / 100);
                                                 }elseif($kaina_visu != 0){
-                                                    echo "Nuolaida netaikoma <br />";
+                                                    echo '<div class="alert alert-danger"Nuolaida netaikoma </div>';
                                                 }
                                             }
                                             $suma += $kiekis * $kaina_visu;
