@@ -76,6 +76,7 @@ if($loged_out){
                                                 if($kaina_visu > 10){
                                                     if($prekes['prekes_nuolaida'] == "BLACKFIRDAY"){
                                                         $percent = 10;
+            //reikėtų pagalvoti kaip apjungti alerts kartu, kad ne kiekvienai prekei po vieną alert mestu
                                                         echo '<div class="alert alert-success" role="alert"> 
                                                             Su kuponu BLACKFIRDAY 10% nuolaida prekei ' .  $preke['prekes_pavadinimas'] . "</div>";
                                                     }elseif($prekes['prekes_nuolaida'] == "ACHILAS"){
