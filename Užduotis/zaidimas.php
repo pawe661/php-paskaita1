@@ -30,6 +30,7 @@ if(isset($_POST['zaidejas2']) && trim($_POST['zaidejas2']) !== "") {
    echo 'Įveskite Žaidėjo 2 vardą'; 
     //    $errors[] = "Įveskite Žaidėjo 1 vardą";
 }
+
 //tikrina kas mes primas
 $eile = rand(1,2);
 print_r($_POST);
