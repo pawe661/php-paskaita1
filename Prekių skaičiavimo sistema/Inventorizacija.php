@@ -142,7 +142,7 @@ if($loged_out){
                                     $pavadinimas = "";
                                     $kiekis    = ""; 
                                     $kaina = "";
-
+                                    //if yra set tada priskiria reikšmę, jeigu ne paduoda tusčią
                                     $pavadinimas = isset($_GET['prekes'][$i]['prekes_pavadinimas']) ? $_GET['prekes'][$i]['prekes_pavadinimas'] : '';
                                     $kaina = isset($_GET['prekes'][$i]['kaina']) ? $_GET['prekes'][$i]['kaina'] : '0';
                                     $kiekis = isset($_GET['prekes'][$i]['kiekis']) ? $_GET['prekes'][$i]['kiekis'] : '0';

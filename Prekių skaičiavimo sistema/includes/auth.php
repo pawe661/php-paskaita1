@@ -34,8 +34,10 @@ if(is_param_equal($_POST, 'login', 1)){
         }
     }
 }
-//Tikrina ar sesija sukurta ir 
+//Tikrina ar sesija sukurta (is set) ir tikrina ar $_SESSION['logged_in'] yra true
 if(isset($_SESSION['logged_in']) AND $_SESSION['logged_in']) {
+    //jeigu praejo true naudojam variable kad nekartoti kas kart 
+    //$_SESSION['logged_in'] = true; ir $_SESSION['user'] = $auth['login'];
     $loged_in = true;
 
     
