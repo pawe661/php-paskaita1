@@ -1,13 +1,10 @@
 <?php
-$color_R = false;
-$color = 'bg-dark';
-if(isset($_GET['color']) && $_GET['color'] ==  1){
-    $color_R = true;
+
+$color = 0;
+if(isset($_GET['color'])){
+    $color = $_GET['color'];
 }
-    if($color_R){
-        $color = 'bg-danger';
-        
-    }
+
 ?>
 
 <!DOCTYPE html>
@@ -19,10 +16,10 @@ if(isset($_GET['color']) && $_GET['color'] ==  1){
     <title>Linkai į save</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
-<body class="<?php echo $color?>">
-    <a class="w-15 btn btn-dark btn-sm border border-light" href="./Linkai.php" >Black</a>
+<body style="background-color:#<?php echo $color?>">
+    <a class="w-15 btn btn-dark btn-sm border border-light" href="./Linkai - kur spalva įvedama į url.php">Back 2 Black</a>
     <form method="GET" action="">
-        <button type="submit" class="w-15 btn btn-dark btn-sm border border-light" name="color" value="1">Red</button>
+        <input type="hidden" name="color" value="1"/>
     </form>
 </body>
 </html>
