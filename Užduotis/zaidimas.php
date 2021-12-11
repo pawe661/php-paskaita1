@@ -18,6 +18,9 @@ $zaidejas1 = '';
 $zaidejas2 = '';
 $eile = 0;
 $eileV = 0;
+$rezultatasZ1 = 0;
+$rezultatasZ2 = 0;
+
 if(isset($_POST['zaidejas1']) && trim($_POST['zaidejas1']) !== "") {
     $zaidejas1 = $_POST['zaidejas1'];
 }else {
@@ -32,9 +35,34 @@ if(isset($_POST['zaidejas2']) && trim($_POST['zaidejas2']) !== "") {
 }
 
 //tikrina kas mes primas
-$eile = rand(1,2);
-print_r($_POST);
+if(isset($_POST['eile']) && is_numeric($_POST['eile'])){
+    $eile = $_POST['eile'];
+}
 
+//rezultato skaičiavimas
+if(isset($_POST['rezultatasZ1']) && is_numeric($_POST['rezultatasZ1'])){
+    $rezultatasZ1 = $_POST['rezultatasZ1'];
+    if($eile == 1){
+        //generuoja kiek išmetė kauliukų
+        $rezultatasZ1 += rand(1,6);
+    }
+}
+
+if(isset($_POST['rezultatasZ2']) && is_numeric($_POST['rezultatasZ2'])){
+    $rezultatasZ2 = $_POST['rezultatasZ2'];
+    if($eile == 2){
+        //generuoja kiek išmetė kauliukų
+        $rezultatasZ2 += rand(1,6);
+    }
+}
+if(isset($_POST[$zaidejas1]) && $_POST[$zaidejas1] == "Mesti kauliuką"){
+    $eile = 2;
+}
+if(isset($_POST[$zaidejas2]) && $_POST[$zaidejas2] == "Mesti kauliuką"){
+    $eile = 1;
+}
+
+// print_r($_POST);
 ?>
 
 <!DOCTYPE html>
@@ -48,6 +76,21 @@ print_r($_POST);
 
 </head>
 <body class="bg-light">
+    <?php if($rezultatasZ1 >= 30 || $rezultatasZ2 >= 30) : ?>
+            <!-- WIN Screen -->
+            <div class="d-flex align-items-center justify-content-center" style="height: 100vh;">
+                <div class=" justify-content-center">
+                    <div class=" justify-content-center">
+                        <div class="d-flex">
+                            <span class="fs-2">Sveikinu laimėjo <?php echo (($rezultatasZ1 > $rezultatasZ2) ? $zaidejas1 : $zaidejas2); ?>!</span>
+                        </div>
+<!-- KODEL NEISEINA JO CENTRUOTI?????????? -->
+                        <a class="w-20 btn btn-primary btn-md" href="zaidimas.php">Žaisti iš naujo</a>
+                        
+                    </div>
+                </div>
+            </div>
+    <?php else: ?>
     <div class="d-flex justify-content-between">
         <!-- Game login -->
         <?php if(!$zaidejas1 && !$zaidejas2) : ?>
@@ -67,6 +110,7 @@ print_r($_POST);
                         <input type="text" class="form-control" name="zaidejas2">
                     </div>
                     <div>
+                    <input type="hidden" name="eile" value="<?php echo rand(1,2); ?>">
                     <input class="w-20 btn btn-primary btn-md" type="submit" name="Pradėti">
                     </div>
                 </form>
@@ -77,6 +121,11 @@ print_r($_POST);
                 <form method="POST"> 
                     <div>
                         <span class="fs-6"><?php echo ($eile == 1 ? $zaidejas1 : $zaidejas2) ?></span>
+                        <input type="hidden" name="zaidejas1" value="<?php echo $zaidejas1; ?>">
+                        <input type="hidden" name="zaidejas2" value="<?php echo $zaidejas2; ?>">
+                        <input type="hidden" name="eile" value="<?php echo $eile; ?>">
+                        <input type="hidden" name="rezultatasZ1" value="<?php echo $rezultatasZ1;?>">
+                        <input type="hidden" name="rezultatasZ2" value="<?php echo $rezultatasZ2;?>">    
                         <input type="submit" class="w-15 btn btn-primary btn-md" 
                         name="<?php echo ($eile == 1 ? $zaidejas1 : $zaidejas2) ?>" 
                         value="Mesti kauliuką"/>
@@ -97,14 +146,19 @@ print_r($_POST);
                 </li>
                 <?php if($eile == 2) : ?>
                     <li class="nav-item">
+                        <span class="badge bg-primary rounded-pill"><?php echo $rezultatasZ2 ?></span>
                         <span class="fs-6"><?php echo $zaidejas2?></span>
                     </li>
-                <?php endif; ?>    
+                <?php endif; ?>
+                <?php if($eile == 1 || $eile == 2) : ?>    
                 <li class="nav-item">
+                    <span class="badge bg-primary rounded-pill"><?php echo $rezultatasZ1 ?></span>
                     <span class="fs-6"><?php echo $zaidejas1?></span>
                 </li>
+                <?php endif; ?> 
                 <?php if($eile == 1) : ?>
                     <li class="nav-item">
+                        <span class="badge bg-primary rounded-pill"><?php echo $rezultatasZ2 ?></span>
                         <span class="fs-6"><?php echo $zaidejas2?></span>
                     </li>
                 <?php endif; ?> 
@@ -114,5 +168,6 @@ print_r($_POST);
             </div>
         </div>
     </div>
+    <?php endif; ?> 
 </body>
 </html>
