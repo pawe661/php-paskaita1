@@ -14,7 +14,7 @@ for($i = 0; $i < 100; $i++){
 
 $json = json_encode($masyvas_out);
 
-$failas = fopen('./uzd1.json', 'w+');
+$failas = fopen('./uzd1.json', 'w');
 if( fwrite($failas, $json) ) {
     echo 'Sekmingai irasytas stringas i faila';
 }
@@ -39,7 +39,7 @@ if( fwrite($failas, $json) ) {
 // į JSON formatą ir vėl išssaugokite faile.
 
 $json2 = file_get_contents('./uzd1.json');
-$masyvas = json_decode($json);
+$masyvas = json_decode($json2);
 // echo "<pre>";
 // print_r($masyvas);
 foreach($masyvas as $index => $skaicius){
@@ -57,4 +57,28 @@ $json2 = json_encode($masyvas);
 if(fwrite($failas, $json2) ) {
     echo 'Sekmingai irasytas stringas i faila';
 }
+
+$error = json_last_error();
+
+//Pakartokite antrają užduotį, tačiau su sąlyga: Jei masyvo elemento 
+//reikšmė yra skaičius ir jis mažesnis nei 500, jo reikšmę pakeiskite 
+//masyvu su atsitiktiniu kiekiu elementų nuo 3 iki 500, o jų reikšmės 
+//atsitiktiniai skaičiais nuo 500 iki 6500 
+
+$json3 = file_get_contents('./uzd1.json');
+$masyvas_x_3 = json_decode($json3);
+echo "<pre>";
+print_r($masyvas);
+foreach($masyvas_x_3 as $index => $skaicius){
+    foreach($skaicius as $index2 => $skaicius2){
+        if($skaicius2 < 500){
+            unset($masyvas_x_3[$index][$index2]);
+            for($i = 0; $i < rand(3,500); $i++){
+                $masyvas_x_3[$index][$index2][] = rand(500,6500);
+            }
+        }
+    }
+}
+echo "<pre>";
+print_r($masyvas_x_3);
 ?>
