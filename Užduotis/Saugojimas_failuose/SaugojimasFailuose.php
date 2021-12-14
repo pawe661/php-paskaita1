@@ -1,5 +1,18 @@
 <?php
 
+function open_from_db($dir){
+    $failas = fopen($dir, 'r');
+    $json = file_get_contents($dir);
+    $json = json_decode($json, true);
+    fclose($failas);
+
+    $json = json_decode($json, true);
+
+    return $json;
+}
+
+
+$json_dir = './uzd1.json';
 $masyvas_out = [];
 
 for($i = 0; $i < 100; $i++){
@@ -14,8 +27,8 @@ for($i = 0; $i < 100; $i++){
 
 $json = json_encode($masyvas_out);
 
-$failas = fopen('./uzd1.json', 'w');
-if( fwrite($failas, $json) ) {
+$failas = fopen($json_dir, 'w');
+if( file_put_contents ($json_dir, $json) ) {
     echo 'Sekmingai irasytas stringas i faila';
 }
 
@@ -38,7 +51,7 @@ if( fwrite($failas, $json) ) {
 //kurių skaitinės reikšmės didenesnės nei 6500. Masyvą konvertuokite
 // į JSON formatą ir vėl išssaugokite faile.
 
-$json2 = file_get_contents('./uzd1.json');
+$json2 = file_get_contents($json_dir);
 $masyvas = json_decode($json2);
 // echo "<pre>";
 // print_r($masyvas);
@@ -54,7 +67,7 @@ print_r($masyvas);
 
 $json2 = json_encode($masyvas);
 
-if(fwrite($failas, $json2) ) {
+if(file_put_contents($json_dir, $json2) ) {
     echo 'Sekmingai irasytas stringas i faila';
 }
 
@@ -65,8 +78,8 @@ $error = json_last_error();
 //masyvu su atsitiktiniu kiekiu elementų nuo 3 iki 500, o jų reikšmės 
 //atsitiktiniai skaičiais nuo 500 iki 6500 
 
-$json3 = file_get_contents('./uzd1.json');
-$masyvas_x_3 = json_decode($json3);
+$json3 = file_get_contents($json_dir);
+$masyvas_x_3 = json_decode($json3, true);
 echo "<pre>";
 print_r($masyvas);
 foreach($masyvas_x_3 as $index => $skaicius){
