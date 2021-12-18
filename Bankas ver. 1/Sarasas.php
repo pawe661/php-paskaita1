@@ -5,7 +5,10 @@ require ('./includes/auth.php');
 if($loged_out){
     header("Location: ./Login.php");
 }
-$saskaitos = [];
+
+$acc_db = file_get_contents('./db/account_db.json');
+$acc_db = json_decode($acc_db, true);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,18 +26,18 @@ $saskaitos = [];
     include("./includes/header.php");
 ?>
 <div class="container-lg rounded">
-  <div class="row justify-content-between bg-white  mt-5 rounded ">
+  <div class="row justify-content-between bg-white  mt-5 rounded">
       <table class="table text-start bdr">
         <thead class=" bg-dark text-light ">
           <th>ID</th>
-          <th>Prekių Pavadinimas</th>
-          <th>Prekių Kiekis</th>
-          <th>Prekių Kaina</th>
+          <th>Sąskaitos numeris</th>
+          <th>Vardas Pavardė</th>
+          <th>Suma</th>
           <th></th>
         </thead>
         <tbody >    
         <?php
-          foreach($saskaitos as $id => $reiksme) :
+          foreach($acc_db as $id => $reiksme) :
         ?>
         <tr>
           <td> <?php echo $id ?>tttttttttttt</td>
