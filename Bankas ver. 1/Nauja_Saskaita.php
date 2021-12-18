@@ -1,9 +1,10 @@
 <?php
     require ('./includes/funk.php');
+    require ('./includes/auth.php');
 
-// if(!$loged_in){
-//     header("Location: ./Login.php");
-// }
+if($loged_out){
+    header("Location: ./Login.php");
+}
 
 $acc_db = file_get_contents('./db/account_db.json');
 $acc_db = json_decode($acc_db, true);
@@ -89,52 +90,55 @@ $acc_db = json_decode($acc_db, true);
     <link href="./assets/css/custom.css" rel="stylesheet">
 </head>
 <body class="gradi_bg">
-<?php 
-    include("./includes/header.php");
-?>
-<div class="container-lg rounded">
-    <div class="row justify-content-between bg-white  mt-5 rounded ">
-        <div class="card-header bg-dark text-light rounded">Naujos sąskaitos kūrimo forma</div>
+<div class="bg_img"></div>
+    <div class="z_position">
         <?php 
-            include("./includes/alerts.php");
+            include("./includes/header.php");
         ?>
-        <form class="m-2 mt-5 mb-5" method="POST" action="">
-            <div class="row mt-1 me-2">
-                <div class="col-md-2 mb-3 rounded">
-                    <p class="fw-bold text-center"> Vardas Pavardė</p>
-                </div>
-                <div class="col-md-5 mb-3 rounded">
-                    <input type="text" class="form-control" id="firstName" name="saskaita[vardas]" >
-                    <label for="firstName" class="text-secondary">Vardas</label>
-                </div>
-                <div class="col-md-5 mb-3 rounded">
-                    <input type="text" class="form-control" id="lastName" name="saskaita[pavarde]">
-                    <label for="lastName" class="text-secondary">Pavardė</label>
-                </div>
-            </div>
-            <div class="row mt-1 me-2">
-                <div class="col-md-2 mb-3 rounded">
-                    <p class="fw-bold text-center"> Asmens kodas</p>
-                </div>
-                <div class="col mb-3">
-                    <input type="text" class="form-control" id="ak-number" name="saskaita[ak]">
-                </div>
-            </div>
-            <div class="row mt-3 me-2">
-                <div class="col-md-2 mb-3 rounded">
-                    <p class="fw-bold text-center"> Sąskaitos numeris</p>
-                </div>
-                <div class="col mb-3 rounded">
-                    <input class="form-control" type="text" value="<?php echo $new_acc_nr; ?>" name="saskaita[iban]" readonly>
-                </div>
-            </div>
-            <div class=" mt-3 me-2">
-                <button type="submit" class="btn btn-md grn_button ms-3 ps-5 pe-5 " >Submit</button>
-            </div>
-        </form>
+        <div class="container-lg rounded">
+            <div class="row justify-content-between bg-white  mt-5 rounded ">
+                <div class="card-header bg-dark text-light rounded">Naujos sąskaitos kūrimo forma</div>
+                <?php 
+                    include("./includes/alerts.php");
+                ?>
+                <form class="m-2 mt-5 mb-5" method="POST" action="">
+                    <div class="row mt-1 me-2">
+                        <div class="col-md-2 mb-3 rounded">
+                            <p class="fw-bold text-center"> Vardas Pavardė</p>
+                        </div>
+                        <div class="col-md-5 mb-3 rounded">
+                            <input type="text" class="form-control" id="firstName" name="saskaita[vardas]" >
+                            <label for="firstName" class="text-secondary">Vardas</label>
+                        </div>
+                        <div class="col-md-5 mb-3 rounded">
+                            <input type="text" class="form-control" id="lastName" name="saskaita[pavarde]">
+                            <label for="lastName" class="text-secondary">Pavardė</label>
+                        </div>
+                    </div>
+                    <div class="row mt-1 me-2">
+                        <div class="col-md-2 mb-3 rounded">
+                            <p class="fw-bold text-center"> Asmens kodas</p>
+                        </div>
+                        <div class="col mb-3">
+                            <input type="text" class="form-control" id="ak-number" name="saskaita[ak]">
+                        </div>
+                    </div>
+                    <div class="row mt-3 me-2">
+                        <div class="col-md-2 mb-3 rounded">
+                            <p class="fw-bold text-center"> Sąskaitos numeris</p>
+                        </div>
+                        <div class="col mb-3 rounded">
+                            <input class="form-control" type="text" value="<?php echo $new_acc_nr; ?>" name="saskaita[iban]" readonly>
+                        </div>
+                    </div>
+                    <div class=" mt-3 me-2">
+                        <button type="submit" class="btn btn-md grn_button ms-3 ps-5 pe-5 " >Submit</button>
+                    </div>
+                </form>
 
+            </div>
+        </div>
     </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

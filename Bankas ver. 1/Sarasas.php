@@ -6,8 +6,23 @@ if($loged_out){
     header("Location: ./Login.php");
 }
 
-$acc_db = file_get_contents('./db/account_db.json');
-$acc_db = json_decode($acc_db, true);
+$acc_db = json_decode(file_get_contents('./db/account_db.json'), true);
+
+if( isset($_GET['action']) AND $_GET['action'] == 'delete') {
+
+  if( isset($_GET['id']) ) {
+
+      $id = $_GET['id'];
+
+      unset($acc_db[$id]);
+
+      if( file_put_contents( './db/account_db.json', json_encode($acc_db) ) ) {
+          header('Location: ./Sarasas.php?status=1.3');
+      } else {
+          header('Location: ./Sarasas.php?status=2.3');
+      } 
+  }
+}
 
 ?>
 <!DOCTYPE html>
@@ -21,44 +36,49 @@ $acc_db = json_decode($acc_db, true);
     <link href="./assets/css/custom.css" rel="stylesheet">
 </head>
 
-<body >
-<div class="bg_img">
-
-<?php 
-    include("./includes/header.php");
-?>
-
-<div class="container-lg rounded">
-  <div class="row justify-content-between bg-white  mt-5 rounded">
-      <table class="table text-start bdr">
-        <thead class=" bg-dark text-light ">
-          <th>ID</th>
-          <th>Sąskaitos numeris</th>
-          <th>Vardas Pavardė</th>
-          <th>Suma</th>
-          <th></th>
-        </thead>
-        <tbody >    
-        <?php
-          foreach($acc_db as $id => $reiksme) :
-            print_r($reiksme) ;
-        ?>
-        <tr >
-          <td class="col-md-1"> <?php echo $id ?></td>
-          <td class="col-md-3"> <?php echo $reiksme['iban'] ?></td>
-          <td class="col-md-3"> <?php echo $reiksme['pavarde'] .' '. $reiksme['vardas']   ?></td>
-          <td class="col-md-2"> <?php echo $reiksme['pinigai'] ?></td>
-          <td class="col-md-5">
-            <a href="" class="btn grn_button">Pridėti lėšų</a>
-            <a href="" class="btn btn-primary">Nuskaičiuoti lėšas</a>
-            <a href="" class="btn btn-danger">Ištrinti</a>
-          </td>
-        </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
-  </div>
-</div>
+<body>
+  <div class="bg_img"></div>
+    <div class="z_position">
+    <?php 
+        include("./includes/header.php");
+    ?>
+    <div class="container">
+      <?php 
+        include("./includes/alerts.php");
+      ?>
+    </div>
+    <div class=" container-lg rounded ">
+      <div class="row justify-content-between bg-white  mt-5 rounded">
+      
+          <table class="table text-start bdr">
+            <thead class=" bg-dark text-light">
+              <th class="text-center">ID</th>
+              <th>Sąskaitos numeris</th>
+              <th>Pavardė Vardas</th>
+              <th >Suma</th>
+              <th></th>
+            </thead>
+            <tbody >    
+            <?php
+              foreach($acc_db as $id => $reiksme) :
+            ?>
+            <tr >
+              <td class="col-md-1 text-center"> <?php echo $id ?></td>
+              <td class="col-md-3 "> <?php echo $reiksme['iban'] ?></td>
+              <td class="col-md-3 "> <?php echo $reiksme['pavarde'] .' '. $reiksme['vardas']   ?></td>
+              <td class="col-md-2"> <?php echo $reiksme['pinigai'] ?></td>
+              <td class="col-md-5">
+                <a href="../Bankas ver. 1/Prideti_Lesas.php?id=<?php echo $id; ?>" class="btn grn_button">Pridėti lėšų</a>
+                <a href="../Bankas ver. 1/Nuskaiciuoti_Lesas.php?id=<?php echo $id; ?>" class="btn btn-primary">Nuskaičiuoti lėšas</a>
+                <a href="./Sarasas.php?iban=delete&id=<?php echo $id; ?>" 
+                  class="btn btn-danger">Ištrinti</a>
+              </td>
+            </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
 </div>
 
 

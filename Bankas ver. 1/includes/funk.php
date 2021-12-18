@@ -105,8 +105,8 @@ if( !function_exists('alert_status_success') ) {
 
 //Email validavimas ar yra DB 
 if( !function_exists('email_exists') ) {
-    function email_exists($db,$ak) {
-        $ak_val = array_column($db, 'email');  
+    function email_exists($db,$ak, $key) {
+        $ak_val = array_column($db, $key);  
         if(in_array($ak, $ak_val)){
             return $ak_val;
         }

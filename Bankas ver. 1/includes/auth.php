@@ -74,7 +74,7 @@ if(is_param_equal($_POST, 'login', 1)){
     if( isset($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
  
         //randa index
-        $db_key = array_search($_POST['email'], email_exists($user_db, $_POST['email']));
+        $db_key = array_search($_POST['email'], email_exists($user_db, $_POST['email'],'email'));
 
         //tikrina ar paštas sutampa su db paštu
         if( $_POST['email'] == $user_db[$db_key]['email']){

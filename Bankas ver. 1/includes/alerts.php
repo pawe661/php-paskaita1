@@ -27,4 +27,14 @@ alert_status_success(7.1,'Vartuotojas sukurtas sėkmingai');
 alert_status_alert(1.2,'Įvestas taisingą el paštą');
 alert_status_alert(2.2,'Toks vartuotojas neužregistuotas');
 alert_status_alert(3.2,'Netaisingas slaptažodis');
+
+//Sarašas delete pranešimai
+alert_status_alert(2.3,'Pašalinimas nepavyko');
+
+alert_status_success(1.3,'Sąskaita sėkmingai pašalinta');
+
+//Pinigų pridejimas
+alert_status_alert(2.4,'Pinigų pridėjimas nepavyko');
+alert_status_alert(3.4,'IBAN ilgis neatitinka');
+alert_status_success(1.4,'Pinigai sėkmingai Pridėti');
 ?> 
