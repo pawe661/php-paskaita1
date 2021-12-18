@@ -108,7 +108,7 @@ if( !function_exists('email_exists') ) {
     function email_exists($db,$ak) {
         $ak_val = array_column($db, 'email');  
         if(in_array($ak, $ak_val)){
-            return true;
+            return $ak_val;
         }
             return false;
     }

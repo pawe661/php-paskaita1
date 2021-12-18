@@ -22,5 +22,9 @@ alert_status_alert(6.1,'Duomenų nepavyko įrašyti');
 
 alert_status_success(7.1,'Vartuotojas sukurtas sėkmingai');
 
+//Login validacijos pranešimai
 
+alert_status_alert(1.2,'Įvestas taisingą el paštą');
+alert_status_alert(2.2,'Toks vartuotojas neužregistuotas');
+alert_status_alert(3.2,'Netaisingas slaptažodis');
 ?> 
