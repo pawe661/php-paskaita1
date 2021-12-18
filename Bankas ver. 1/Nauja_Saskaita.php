@@ -38,7 +38,10 @@ $acc_db = json_decode($acc_db, true);
                     if( isset($_POST['saskaita']['iban']) && strlen($_POST['saskaita']['iban']) == 20) {
     //Reikėtų dar sutikrinti ar sugeneruotas IBAN ir paduodamas į POST yra toks pat   
                         
-
+                        //Nustato sąskaitos sumą
+                        $_POST['saskaita']['pinigai'] = 0;
+                        
+                        
                         $new_saskaita = [$_POST['saskaita']];
                                 
                         if($acc_db) {
