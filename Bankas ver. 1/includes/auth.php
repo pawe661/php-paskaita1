@@ -2,6 +2,61 @@
 session_start();
 unset($_SESSION['logged_in']);
 
+//USER DB
+$user_db = file_get_contents('./db/users.json');
+$user_db = json_decode($user_db, true);
+
+//Register php            
+
+// validavimas pateiktų duomenų
+    if(isset($_POST['user']) && saskaitos_exists($_POST['user'])){
+        if( isset($_POST['user']['name']) && preg_match("/^([a-zA-Z' ]+)$/",$_POST['user']['name']) 
+            && strlen($_POST['user']['name']) > 3 ) {
+            if( isset($_POST['user']['surname']) && preg_match("/^([a-zA-Z' ]+)$/",$_POST['user']['surname']) 
+                && strlen($_POST['user']['surname']) > 3 ) {
+                if( isset($_POST['user']['email']) && filter_var($_POST['user']['email'], FILTER_VALIDATE_EMAIL) 
+                    && ak_unique($user_db,$_POST['user']['email'])) {
+                    if( isset($_POST['user']['password']) && strlen($_POST['user']['password']) > 4) {
+     
+                        
+                        $_POST['user']['password'] = md5($_POST['user']['password']);
+                        print_r($_POST['user']);
+                        $new_user = [$_POST['user']];
+                                
+                        if($user_db) {
+                            $new_user = array_merge($user_db, $new_user);
+                        }
+                       
+                        $json = json_encode($new_user);
+                        
+                        //tikrina ar sekmingai įrašyta į db
+                        if( file_put_contents('./db/users.json', $json)) {
+                            header('Location: ./Register.php?status=7.1');
+                        }else {
+                            header('Location: ./Register.php?status=6.1');
+                        }
+        
+                    }else{
+                        $_POST = [];
+                        header('Location: ./Register.php?status=5.1');
+                    }
+                 }else{
+                    $_POST = [];
+                    header('Location: ./Register.php?status=4.1');
+                 }
+            }else{
+                $_POST = [];
+                header('Location: ./Register.php?status=3.1');
+            }
+        }else{
+            $_POST = [];
+            header('Location: ./Register.php?status=2.1');
+        }
+    }
+
+
+    
+
 // Login php kodas
 
 // hardcoded login credentials

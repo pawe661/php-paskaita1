@@ -1,17 +1,18 @@
 <?php
 
+if( !function_exists('is_param_equal') ) {
 function is_param_equal($method, $key, $compare) {
         
     return (isset($method[$key]) && $method[$key] ==  $compare) ? true : false;
 
 }
-
+}
 if( !function_exists('saskaitos_exists') ) {
 
 //Ar $element atitinka kondicija ar ne
-function saskaitos_exists() {
+function saskaitos_exists($method) {
 
-    if(is_array($_POST['saskaita']) AND count($_POST['saskaita']) > 0) {
+    if(is_array($method) AND count($method) > 0) {
         return true; // break; cikle
     }
 
@@ -22,48 +23,48 @@ function saskaitos_exists() {
 
 }
 //AK validavimas pagal moda
-if( !function_exists('ak_true') ) {
-    function ak_true($ak) {
-        $S= (substr($ak, 0, 1) * 1) +
-        (substr($ak, 1, 1) * 2) +
-        (substr($ak, 2, 1) * 3) +
-        (substr($ak, 3, 1) * 4) +
-        (substr($ak, 4, 1) * 5) +
-        (substr($ak, 5, 1) * 6) +
-        (substr($ak, 6, 1) * 7) +
-        (substr($ak, 7, 1) * 8) +
-        (substr($ak, 8, 1) * 9) +
-        (substr($ak, 9, 1) * 1);
+// if( !function_exists('ak_true') ) {
+//     function ak_true($ak) {
+//         $S= (substr($ak, 0, 1) * 1) +
+//         (substr($ak, 1, 1) * 2) +
+//         (substr($ak, 2, 1) * 3) +
+//         (substr($ak, 3, 1) * 4) +
+//         (substr($ak, 4, 1) * 5) +
+//         (substr($ak, 5, 1) * 6) +
+//         (substr($ak, 6, 1) * 7) +
+//         (substr($ak, 7, 1) * 8) +
+//         (substr($ak, 8, 1) * 9) +
+//         (substr($ak, 9, 1) * 1);
 
-        if(fmod($S, 11) != 10){
-            if(substr($ak, 10, 1) ==  $POSTAK){
+//         if(fmod($S, 11) != 10){
+//             if(substr($ak, 10, 1) ==  $POSTAK){
 
-            }
-        }else{
-            $S= (substr($ak, 0, 1) * 3) +
-            (substr($ak, 1, 1) * 4) +
-            (substr($ak, 2, 1) * 5) +
-            (substr($ak, 3, 1) * 6) +
-            (substr($ak, 4, 1) * 7) +
-            (substr($ak, 5, 1) * 8) +
-            (substr($ak, 6, 1) * 9) +
-            (substr($ak, 7, 1) * 1) +
-            (substr($ak, 8, 1) * 2) +
-            (substr($ak, 9, 1) * 3);
+//             }
+//         }else{
+//             $S= (substr($ak, 0, 1) * 3) +
+//             (substr($ak, 1, 1) * 4) +
+//             (substr($ak, 2, 1) * 5) +
+//             (substr($ak, 3, 1) * 6) +
+//             (substr($ak, 4, 1) * 7) +
+//             (substr($ak, 5, 1) * 8) +
+//             (substr($ak, 6, 1) * 9) +
+//             (substr($ak, 7, 1) * 1) +
+//             (substr($ak, 8, 1) * 2) +
+//             (substr($ak, 9, 1) * 3);
 
-            if(fmod($S, 11) != 10){
-                if(substr($ak, 10, 1) ==  $POSTAK){
+//             if(fmod($S, 11) != 10){
+//                 if(substr($ak, 10, 1) ==  $POSTAK){
 
-                }
-            }else{
-                if(substr($ak, 10, 1) ==  $POSTAK){
+//                 }
+//             }else{
+//                 if(substr($ak, 10, 1) ==  $POSTAK){
                     
-                }
+//                 }
 
-            }
-        }
-    }
-}
+//             }
+//         }
+//     }
+// }
 //AK validavimas dėl unique 
 if( !function_exists('ak_unique') ) {
     function ak_unique($db,$ak) {

@@ -70,9 +70,6 @@ $acc_db = json_decode($acc_db, true);
             $_POST = [];
             header('Location: ./Nauja_Saskaita.php?status=2');
         }
-    }else{
-        // unset($_POST);
-        // header('Location: ./Nauja_Saskaita.php?status=1');
     }
 
     

@@ -2,10 +2,10 @@
 require ('./includes/funk.php');
 require ('./includes/auth.php');
 
-if($loged_in){
-    header("Location: ./Sarasas.php");
-}
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,25 +17,34 @@ if($loged_in){
     <link href="./assets/css/custom.css" rel="stylesheet">
 </head>
 <body class="gradi_bg">
-
 <div class="container-lg ">
     <div class="target_margin row d-flex justify-content-between bg-white  mt-5 rounded">
-        <div class="d-none d-md-block col-md-4  mx-auto d-flex align-items-center">
-            <img src="./assets/images/img-01.png">
+        <div class="d-none d-md-block col-md-4 mx-auto d-flex align-items-center">
+            <img src="./assets/images/img-02.png" >
         </div>
         <div class="col-md-6 m-3 d-flex align-items-center">
             <div class="col-12 ">
-                <div class="card-header bg-dark text-light rounded">Prisijungti</div>
+            <?php 
+            include("./includes/alerts.php");
+            ?>
+                <div class="card-header bg-dark text-light rounded">Registruoti naują vartotoją</div>
                 <div class=" m-2">
                     <form method="POST" action="">
-                        <input type="hidden" name="login" value="1"/>
+                    <div class="mb-3">
+                            <label for="LogInname" class="form-label">Vartotojo vardas</label>
+                            <input type="name" name="user[name]" class="form-control" id="LogInname">
+                        </div>
+                    <div class="mb-3">
+                            <label for="LogInsurname" class="form-label">Vartotojo pavardė</label>
+                            <input type="surname" name="user[surname]" class="form-control" id="LogInsurname">
+                        </div>
                         <div class="mb-3">
                             <label for="LogInEmail" class="form-label">Prisijungimo paštas</label>
-                            <input type="email" name="email" class="form-control" id="LogInEmail">
+                            <input type="email" name="user[email]" class="form-control" id="LogInEmail">
                         </div>
                         <div class="mb-3">
                             <label for="LogInPassword" class="form-label">Slaptažodis</label>
-                            <input type="password" name="password" class="form-control" id="LogInPassword">
+                            <input type="password" name="user[password]" class="form-control" id="LogInPassword">
                         </div>
                         <button type="submit" class="btn grn_button" >Sukurti</button>
                     </form>
