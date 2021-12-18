@@ -1,4 +1,7 @@
 <?php 
+require ('./includes/funk.php');
+
+
 session_start();
 unset($_SESSION['logged_in']);
 
@@ -18,9 +21,9 @@ $user_db = json_decode($user_db, true);
                     && ak_unique($user_db,$_POST['user']['email'])) {
                     if( isset($_POST['user']['password']) && strlen($_POST['user']['password']) > 4) {
      
-                        
+                        //užkoduoja su md5
                         $_POST['user']['password'] = md5($_POST['user']['password']);
-                        print_r($_POST['user']);
+
                         $new_user = [$_POST['user']];
                                 
                         if($user_db) {
@@ -61,8 +64,9 @@ $user_db = json_decode($user_db, true);
 
 // hardcoded login credentials
 $auth = [
-    'login' => 'admin@php.lt',
-    'password' => 'labas1234'
+    
+    // 'login' => 'admin@php.lt',
+    // 'password' => 'labas1234'
 ];
 
 $loged_in = false;
@@ -73,7 +77,7 @@ if(is_param_equal($_POST, 'login', 1)){
     echo "bandom Prisijungti";
 
     //patikrina ar paduodamas yra email "standartiniu email formatu"
-    if( isset($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) ) {
+    if( isset($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) && email_exists($user_db, $_POST['email'])) {
         echo "el paštas yra įvestas";
 
         //tikrina ar paštas sutampa su hardcoded paštu

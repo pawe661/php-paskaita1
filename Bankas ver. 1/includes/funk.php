@@ -102,5 +102,16 @@ if( !function_exists('alert_status_success') ) {
     <?php endif; 
     }
 }
+
+//Email validavimas ar yra DB 
+if( !function_exists('email_exists') ) {
+    function email_exists($db,$ak) {
+        $ak_val = array_column($db, 'email');  
+        if(in_array($ak, $ak_val)){
+            return true;
+        }
+            return false;
+    }
+}
     ?>
     
