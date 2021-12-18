@@ -21,10 +21,13 @@ $acc_db = json_decode($acc_db, true);
     <link href="./assets/css/custom.css" rel="stylesheet">
 </head>
 
-<body class="gradi_bg">
+<body >
+<div class="bg_img">
+
 <?php 
     include("./includes/header.php");
 ?>
+
 <div class="container-lg rounded">
   <div class="row justify-content-between bg-white  mt-5 rounded">
       <table class="table text-start bdr">
@@ -38,13 +41,14 @@ $acc_db = json_decode($acc_db, true);
         <tbody >    
         <?php
           foreach($acc_db as $id => $reiksme) :
+            print_r($reiksme) ;
         ?>
-        <tr>
-          <td> <?php echo $id ?>tttttttttttt</td>
-          <td> <?php  ?></td>
-          <td> <?php  ?></td>
-          <td> <?php  ?></td>
-          <td>
+        <tr >
+          <td class="col-md-1"> <?php echo $id ?></td>
+          <td class="col-md-3"> <?php echo $reiksme['iban'] ?></td>
+          <td class="col-md-3"> <?php echo $reiksme['pavarde'] .' '. $reiksme['vardas']   ?></td>
+          <td class="col-md-2"> <?php echo $reiksme['pinigai'] ?></td>
+          <td class="col-md-5">
             <a href="" class="btn grn_button">Pridėti lėšų</a>
             <a href="" class="btn btn-primary">Nuskaičiuoti lėšas</a>
             <a href="" class="btn btn-danger">Ištrinti</a>
@@ -55,6 +59,8 @@ $acc_db = json_decode($acc_db, true);
     </table>
   </div>
 </div>
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
