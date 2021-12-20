@@ -34,7 +34,7 @@ if( isset($_GET['action']) AND $_GET['action'] == 'delete') {
 //PASTABA SU VISAIS ŠITAIS SORT KEIČIASI ID
 if(isset($_GET['rusiavimas'])) {
   if($_GET['rusiavimas'] == 1) {
-    ksort($acc_db);
+     ksort($acc_db);
   } 
   if($_GET['rusiavimas'] == 2) {
     $sort_by = array_column($acc_db, 'iban');
@@ -48,7 +48,10 @@ if(isset($_GET['rusiavimas'])) {
     $sort_by = array_column($acc_db, 'pinigai');
     array_multisort($sort_by, SORT_ASC, $acc_db);
   } 
+  $json = json_encode($acc_db);
+  file_put_contents('./db/account_db.json', $json);
 }
+
 
 ?>
 <!DOCTYPE html>
