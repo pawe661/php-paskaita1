@@ -38,26 +38,28 @@ $acc_db = json_decode(file_get_contents('./db/account_db.json'), true);
                 if( isset($_GET['id']) && is_numeric($_GET['id']) ) :
                 $acc = $acc_db[$_GET['id']];
 
-            //Pinigų pridejimas prie esamos sąskaitos sumos
-                if(isset($_POST['saskaita']) && saskaitos_exists($_POST['saskaita'])){
-                    if(isset($_POST['saskaita']['iban']) && $_POST['saskaita']['iban'] == $acc['iban']){
-                        if(isset($_POST['saskaita']['add_lesos']) && is_numeric($_POST['saskaita']['add_lesos']) && ($_POST['saskaita']['add_lesos'] > 0)){
-        
-                            $acc_db[$_GET['id']]['pinigai'] += $_POST['saskaita']['add_lesos'];
+                //Pinigų pridejimas prie esamos sąskaitos sumos
+                    if(isset($_POST['saskaita']) && saskaitos_exists($_POST['saskaita'])){
+                        if(isset($_POST['saskaita']['iban']) && $_POST['saskaita']['iban'] == $acc['iban']){
+                            if(isset($_POST['saskaita']['add_lesos']) && is_numeric($_POST['saskaita']['add_lesos']) && ($_POST['saskaita']['add_lesos'] > 0)){
+            
+                                $acc_db[$_GET['id']]['pinigai'] += $_POST['saskaita']['add_lesos'];
 
-                            $json = json_encode($acc_db);
-                        
-                            //tikrina ar sekmingai įrašyta į db
-                            if( file_put_contents('./db/account_db.json', $json)) {
-                                header('Location: ./Prideti_Lesas.php?status=1.4');
+                                $json = json_encode($acc_db);
+                            
+                                //tikrina ar sekmingai įrašyta į db
+                                if( file_put_contents('./db/account_db.json', $json)) {
+                                    header('Location: ./Prideti_Lesas.php?status=1.4');
+                                }else {
+                                    header('Location: ./Prideti_Lesas.php?status=2.4');
+                                }
                             }else {
-                                header('Location: ./Prideti_Lesas.php?status=2.4');
-
+                                alert_status_alert_same_id('Nuskaitomų pinigų suma negali būti neigiama');
                             }
-//Reikia surašyti alerts visiem šitiem
+                        }else {
+                            header('Location: ./Prideti_Lesas.php?status=4.4');
                         }
                     }
-                }
                 ?>
                 <form class="m-2 mt-5 mb-5 " method="POST" action="">
                     <div class="row mt-3 me-2 ">

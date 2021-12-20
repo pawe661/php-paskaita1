@@ -6,6 +6,7 @@ if($loged_out){
     header("Location: ./Login.php");
 }
 
+//saskaitos trinimas
 $acc_db = json_decode(file_get_contents('./db/account_db.json'), true);
 
 if( isset($_GET['action']) AND $_GET['action'] == 'delete') {
@@ -14,14 +15,39 @@ if( isset($_GET['action']) AND $_GET['action'] == 'delete') {
 
       $id = $_GET['id'];
 
-      unset($acc_db[$id]);
+      //patikrina ar sąskaitoj yra pinigų
+      
+      if(!$acc_db[$id]['pinigai'] > 0){
 
-      if( file_put_contents( './db/account_db.json', json_encode($acc_db) ) ) {
-          header('Location: ./Sarasas.php?status=1.3');
-      } else {
-          header('Location: ./Sarasas.php?status=2.3');
-      } 
+        unset($acc_db[$id]);
+
+        if( file_put_contents( './db/account_db.json', json_encode($acc_db) ) ) {
+            header('Location: ./Sarasas.php?status=1.3');
+        } else {
+            header('Location: ./Sarasas.php?status=2.3');
+        } 
+      }header('Location: ./Sarasas.php?status=3.3');
   }
+}
+//Rušiavimas
+
+//PASTABA SU VISAIS ŠITAIS SORT KEIČIASI ID
+if(isset($_GET['rusiavimas'])) {
+  if($_GET['rusiavimas'] == 1) {
+    ksort($acc_db);
+  } 
+  if($_GET['rusiavimas'] == 2) {
+    $sort_by = array_column($acc_db, 'iban');
+    array_multisort($sort_by, SORT_ASC, $acc_db);
+  } 
+  if($_GET['rusiavimas'] == 3) {
+    $sort_by = array_column($acc_db, 'pavarde');
+    array_multisort($sort_by, SORT_ASC, $acc_db);
+  } 
+  if($_GET['rusiavimas'] == 4) {
+    $sort_by = array_column($acc_db, 'pinigai');
+    array_multisort($sort_by, SORT_ASC, $acc_db);
+  } 
 }
 
 ?>
@@ -47,9 +73,21 @@ if( isset($_GET['action']) AND $_GET['action'] == 'delete') {
         include("./includes/alerts.php");
       ?>
     </div>
-    <div class=" container-lg rounded ">
-      <div class="row justify-content-between bg-white  mt-5 rounded">
-      
+    <div class=" container-lg rounded bg-white">
+      <div class="row justify-content-between   mt-5 rounded">
+          <div class="col-md-12 align-self-end pt-2 pb-2">
+            <form method="GET" action="">
+              <!-- Mygtuką reikėtų kažkaip į šoną įkišti -->
+              <select name="rusiavimas" onchange="this.form.submit()" class="btn btn-white dropdown-toggle form-select">
+                <option value="0">Pasirinkite rušiavimo būdą:</option>
+                <option value="1">Rusiuoti pagal ID</option>
+                <option value="2">Rusiuoti pagal IBAN</option>
+                <option value="3">Rusiuoti pagal Pavardę</option>
+                <option value="4">Rusiuoti pagal Sąskaitos sumą</option>
+              </select>
+              
+            </form>
+          </div>
           <table class="table text-start bdr">
             <thead class=" bg-dark text-light">
               <th class="text-center">ID</th>

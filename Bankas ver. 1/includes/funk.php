@@ -90,6 +90,17 @@ if( !function_exists('alert_status_alert') ) {
     <?php endif; 
     }
 }
+if( !function_exists('alert_status_alert_same_id') ) {
+    function alert_status_alert_same_id($text) {
+        
+    
+ ?>
+    <div class="alert alert-danger" role="alert">
+        <?php echo $text; ?>
+    </div>
+    <?php
+    }
+}
 
 if( !function_exists('alert_status_success') ) {
     function alert_status_success($staus,$text) {

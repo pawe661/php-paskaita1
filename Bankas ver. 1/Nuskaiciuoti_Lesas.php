@@ -8,7 +8,6 @@ if($loged_out){
 
 $acc_db = json_decode(file_get_contents('./db/account_db.json'), true);
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +21,7 @@ $acc_db = json_decode(file_get_contents('./db/account_db.json'), true);
 </head>
 <body >
 <body>
-    <!-- <div class="bg_img"></div> -->
+    <div class="bg_img"></div>
         <div class="z_position">
             <?php 
                 include("./includes/header.php");
@@ -44,20 +43,27 @@ $acc_db = json_decode(file_get_contents('./db/account_db.json'), true);
                     if(isset($_POST['saskaita']['iban']) && $_POST['saskaita']['iban'] == $acc['iban']){
                         if(isset($_POST['saskaita']['sub_lesos']) && is_numeric($_POST['saskaita']['sub_lesos']) 
                             && ($_POST['saskaita']['sub_lesos'] > 0)){
-//Reikia kad tikrintų ar nesiminusuoja daugiau negu 0       
-                            $acc_db[$_GET['id']]['pinigai'] -= $_POST['saskaita']['sub_lesos'];
+                                if(($acc_db[$_GET['id']]['pinigai']) - ($_POST['saskaita']['sub_lesos']) >= 0){
 
-                            $json = json_encode($acc_db);
-                        
-                            //tikrina ar sekmingai įrašyta į db
-                            if( file_put_contents('./db/account_db.json', $json)) {
-                                header('Location: ./Nuskaiciuoti_Lesas.php?status=1.5');
-                            }else {
-                                header('Location: ./Nuskaiciuoti_Lesas.php?status=2.5');
+                                    $acc_db[$_GET['id']]['pinigai'] -= $_POST['saskaita']['sub_lesos'];
 
-                            }
-//Reikia surašyti alerts visiem šitiem
+                                    $json = json_encode($acc_db);
+                                
+                                    //tikrina ar sekmingai įrašyta į db
+                                    if( file_put_contents('./db/account_db.json', $json)) {
+                                        header('Location: ./Nuskaiciuoti_Lesas.php?status=1.5');
+                                    }else {
+                                        header('Location: ./Nuskaiciuoti_Lesas.php?status=2.5');
+
+                                    }
+                                }else{
+                                alert_status_alert_same_id('Negalima nuo sąskaitos nuimti daugiau negu ' . $acc_db[$_GET['id']]['pinigai'] . ' Eur');
+                                }
+                        }else {
+                            alert_status_alert_same_id('Nuskaitomų pinigų suma negali būti neigiama');
                         }
+                    }else {
+                        header('Location: ./Nuskaiciuoti_Lesas.php?status=4.5');
                     }
                 }
                 ?>

@@ -30,11 +30,24 @@ alert_status_alert(3.2,'Netaisingas slaptažodis');
 
 //Sarašas delete pranešimai
 alert_status_alert(2.3,'Pašalinimas nepavyko');
+alert_status_alert(3.3,'Sąskaitos ištrinti nepavyko nes sąskaitoje yra lėšų');
 
 alert_status_success(1.3,'Sąskaita sėkmingai pašalinta');
 
 //Pinigų pridejimas
 alert_status_alert(2.4,'Pinigų pridėjimas nepavyko');
 alert_status_alert(3.4,'IBAN ilgis neatitinka');
+alert_status_alert(4.4,'Pateiktas IBAN nesutampa');
+// alert_status_alert(5.4,'Pridedamų pinigų suma negali būti neigiama');
+
 alert_status_success(1.4,'Pinigai sėkmingai Pridėti');
+
+//Pinigų nuskaitymas
+alert_status_alert(2.5,'Pinigų nuskaičiuoti nepavyko');
+alert_status_alert(3.5,'IBAN ilgis neatitinka');
+alert_status_alert(4.5,'Pateiktas IBAN nesutampa');
+// alert_status_alert(5.5,'Nuskaitomų pinigų suma negali būti neigiama');
+
+
+alert_status_success(1.5,'Pinigai sėkmingai nuskaičiuoti');
 ?> 
