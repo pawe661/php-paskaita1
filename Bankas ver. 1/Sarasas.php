@@ -109,9 +109,9 @@ if(isset($_GET['rusiavimas'])) {
               <td class="col-md-3 "> <?php echo $reiksme['pavarde'] .' '. $reiksme['vardas']   ?></td>
               <td class="col-md-2"> <?php echo $reiksme['pinigai'] ?></td>
               <td class="col-md-5">
-                <a href="../Bankas ver. 1/Prideti_Lesas.php?id=<?php echo $id; ?>" class="btn grn_button">Pridėti lėšų</a>
-                <a href="../Bankas ver. 1/Nuskaiciuoti_Lesas.php?id=<?php echo $id; ?>" class="btn btn-primary">Nuskaičiuoti lėšas</a>
-                <a href="./Sarasas.php?iban=delete&id=<?php echo $id; ?>" 
+                <a href="./Prideti_Lesas.php?id=<?php echo $id; ?>" class="btn grn_button">Pridėti lėšų</a>
+                <a href="./Nuskaiciuoti_Lesas.php?id=<?php echo $id; ?>" class="btn btn-primary">Nuskaičiuoti lėšas</a>
+                <a href="./Sarasas.php?action=delete&id=<?php echo $id; ?>" 
                   class="btn btn-danger">Ištrinti</a>
               </td>
             </tr>
