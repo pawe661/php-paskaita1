@@ -113,3 +113,16 @@ echo "<h2> Antra užduotis </h2> <br />";
 $company2 = new Registry('Kalavala', 'Basanavičiaus g.', rand(1,100));
 print_r($company2 ->outputPos());
 
+echo "<h2> Trečia užduotis </h2> <br />";
+
+
+$company_db = file_get_contents('./random.json');
+$company_db = json_decode($company_db, true);
+
+foreach ($company_db as $key => $comp) {
+    $comp = new Registry($comp['company'], $comp['address'],$comp['employee_count']);
+    print_r($comp ->outputPos());
+}
+
+
+
