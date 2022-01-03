@@ -113,16 +113,76 @@ echo "<h2> Antra užduotis </h2> <br />";
 $company2 = new Registry('Kalavala', 'Basanavičiaus g.', rand(1,100));
 print_r($company2 ->outputPos());
 
+//Atsidarykite ir apdorokite duotą JSON failą. Iš jo gautą masyvą 
+//paleiskite cikle ir kiekvieno ciklo eigoje sukurkite objektą pagal 
+//pirmoje užduotyje aprašytą klasę. Atspausdinkite įmonės duomenis pagal 
+//tą pačią taisyklę, tačiau duomenų atvaizdavimas NEGALI būti paleistas 
+//klasės viduje. Iš objekto metodo, naudojantis return komanda susigrąžinkite 
+//duomenis į ciklą ir juos atspausdinkite jame.  
+
 echo "<h2> Trečia užduotis </h2> <br />";
 
 
 $company_db = file_get_contents('./random.json');
 $company_db = json_decode($company_db, true);
 
-foreach ($company_db as $key => $comp) {
-    $comp = new Registry($comp['company'], $comp['address'],$comp['employee_count']);
-    print_r($comp ->outputPos());
+// foreach ($company_db as $key => $comp) {
+//     $comp = new Registry($comp['company'], $comp['address'],$comp['employee_count']);
+//     echo 'Įmonė nr. '. ($key+1). '<br/>';
+//     $comp = ($comp ->outputPos());
+//     if(is_array($comp)){
+//         foreach ($comp as $key2 => $value2) {
+//             echo "$key2: $value2 <br />";
+//         }
+//     }else{
+//         echo "$comp <br />";
+//     }
+//     echo "<br />";
+// }
+
+//Sukurkite klasę kuri priimtų du argumentus: min ir max. Klasėje aprašykite 
+//konstruktorių ir du metodus. Pastarieji turi tikrinti ar minimali reikšmė 
+//yra didesnė nei 5 ir ar max mažesnė nei 56 ir grazinti teigiamą arba neigiamą
+//rezultatą. Jei paduodamos reikšmės atitinka abieju metodų kondiciją (if) , 
+//tuomet grąžinkite reikšmę į objektą. Min argumentas sukuriamas pasinaudojant 
+//funkcija rand(0, 56), o Max argumentas funkcija rand(5, 156).
+echo "<h2> Ketvirta užduotis </h2> <br />";
+class MinMax {
+ 
+    public $max;
+    public $min;
+ 
+    public function __construct($min, $max){
+        $this->min = $min;
+        $this->max = $max;
+        $this->isSmaller();
+        $this->isBigger();
+     }
+ 
+     public function isSmaller( ){
+         
+        return ($this->min > 5) ? true : false;
+     }
+ 
+     public function isBigger(){
+ 
+        return ($this->max < 56) ? true : false;
+        
+     }
+    
+     public function outputMin(){
+       if($this->isSmaller() && $this->isBigger()){
+           return  [$this-> min, $this -> max];
+       }else {
+           return false;
+        }
+     }
 }
+ 
+$minMax = new MinMax((rand(0,56)), rand(5,156));
+print_r($minMax ->outputMin());
 
 
+
+// echo $minMax -> $max;
 
